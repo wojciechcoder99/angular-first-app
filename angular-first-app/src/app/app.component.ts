@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { TodoList } from './todoList';
 import { TodoItem } from 'src/models/todoItem';
+import { StringUtils } from 'src/utils/constants';
 
 @Component({
   selector: 'app-root',
@@ -31,6 +32,14 @@ export class AppComponent {
     return this.list.getItemsWith(false);
   }
   get items(): readonly TodoItem[] {
-    return this.list.getItems();
+    return this.list.getItems().filter(item => this.showComplete || !item.completed);
   }
+
+  addItem(task: string): void {
+    if (task != StringUtils.EMPTY_STRING) {
+      this.list.addItem(task);
+    }
+  }
+
+  showComplete: boolean = false;
 }
